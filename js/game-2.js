@@ -1,6 +1,6 @@
-import {render, changeScreen} from './util.js';
-import gameThreeTemplate from './game-3.js';
-import introTemplate from './intro.js';
+import {render, changeScreen} from './util';
+import gameThreeTemplate from './game-3';
+import backToGreeting from './back';
 
 const gameTwoTemplate = render(`<header class="header">
     <button class="back">
@@ -51,6 +51,8 @@ const gameTwoTemplate = render(`<header class="header">
 const gameOptions = gameTwoTemplate.querySelectorAll(`.game__answer`);
 const backBtn = gameTwoTemplate.querySelector(`.back`);
 
+backToGreeting(backBtn);
+
 const radioClickHandler = () => {
   changeScreen(gameThreeTemplate);
 };
@@ -58,11 +60,5 @@ const radioClickHandler = () => {
 gameOptions.forEach(function (it) {
   it.addEventListener(`click`, radioClickHandler);
 });
-
-const backBtnHandler = () => {
-  changeScreen(introTemplate);
-};
-
-backBtn.addEventListener(`click`, backBtnHandler);
 
 export default gameTwoTemplate;

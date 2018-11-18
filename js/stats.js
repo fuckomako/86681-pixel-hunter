@@ -1,5 +1,5 @@
-import {render, changeScreen} from './util.js';
-import introTemplate from './intro.js';
+import {render} from './util';
+import backToGreeting from './back';
 
 const statsTemplate = render(`<header class="header">
     <button class="back">
@@ -112,13 +112,9 @@ const statsTemplate = render(`<header class="header">
       </tr>
     </table>
   </section>`);
-  
+
 const backBtn = statsTemplate.querySelector(`.back`);
 
-const backBtnHandler = () => {
-  changeScreen(introTemplate);
-};
-
-backBtn.addEventListener(`click`, backBtnHandler);
+backToGreeting(backBtn);
 
 export default statsTemplate;

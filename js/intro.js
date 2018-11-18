@@ -1,5 +1,5 @@
-import {render, changeScreen} from './util.js';
-import greetingTemplate from './greeting.js';
+import {render, changeScreen} from './util';
+import greetingTemplate from './greeting';
 
 const introTemplate = render(`<section class="intro">
     <button class="intro__asterisk asterisk" type="button"><span class="visually-hidden">Продолжить</span>*</button>

@@ -1,5 +1,5 @@
-import {render, changeScreen} from './util.js';
-import rulesTemplate from './rules.js';
+import {render, changeScreen} from './util';
+import rulesTemplate from './rules';
 
 const greetingTemplate = render(`<section class="greeting central--blur">
     <img class="greeting__logo" src="img/logo_ph-big.svg" width="201" height="89" alt="Pixel Hunter">

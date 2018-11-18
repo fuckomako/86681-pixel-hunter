@@ -1,6 +1,6 @@
-import {render, changeScreen} from './util.js';
-import gameTwoTemplate from './game-2.js';
-import introTemplate from './intro.js';
+import {render, changeScreen} from './util';
+import gameTwoTemplate from './game-2';
+import backToGreeting from './back';
 
 const gameOneTemplate = render(`<header class="header">
     <button class="back">
@@ -59,20 +59,21 @@ const gameOneTemplate = render(`<header class="header">
     </ul>
   </section>`);
 
+const QUESTION_COUNT = 2;
 const gameOptions = gameOneTemplate.querySelectorAll(`.game__answer`);
 const backBtn = gameOneTemplate.querySelector(`.back`);
 
+backToGreeting(backBtn);
+
 const gameFormHandler = () => {
-  changeScreen(gameTwoTemplate);
+  const questionsAnswered = [...gameOptions].filter((item) => item.control.checked);
+  if (questionsAnswered.length === QUESTION_COUNT) {
+    changeScreen(gameTwoTemplate);
+  }
 };
+
 for (let item of gameOptions) {
   item.addEventListener(`click`, gameFormHandler);
 }
-
-const backBtnHandler = () => {
-  changeScreen(introTemplate);
-};
-
-backBtn.addEventListener(`click`, backBtnHandler);
 
 export default gameOneTemplate;

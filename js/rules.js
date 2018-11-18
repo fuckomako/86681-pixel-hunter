@@ -1,6 +1,6 @@
-import {render, changeScreen} from './util.js';
-import gameOneTemplate from './game-1.js';
-import introTemplate from './intro.js';
+import {render, changeScreen} from './util';
+import gameOneTemplate from './game-1';
+import backToGreeting from './back';
 
 const rulesTemplate = render(`<header class="header">
     <button class="back">
@@ -29,24 +29,37 @@ const rulesTemplate = render(`<header class="header">
       <button class="rules__button  continue" type="submit" disabled>Go!</button>
     </form>
   </section>`);
-  
+
 const rulesForm = rulesTemplate.querySelector(`.rules__form`);
 const rulesInput = rulesTemplate.querySelector(`.rules__input`);
 const rulesBtn = rulesForm.querySelector(`.rules__button`);
 const backBtn = rulesTemplate.querySelector(`.back`);
 
+backToGreeting(backBtn);
+
+const loadSavedName = (inputField, submitButton) => {
+  const savedName = localStorage.getItem(`userName`);
+  if (savedName) {
+    inputField.value = savedName;
+    submitButton.disabled = false;
+  }
+  inputField.focus();
+};
+
+loadSavedName(rulesInput, rulesBtn);
+
 const rulesInputHandler = () => {
   rulesBtn.disabled = !rulesInput.value.length;
 };
 
-rulesInput.addEventListener(`input`, rulesInputHandler);
-
-rulesBtn.addEventListener(`click`, () => changeScreen(gameOneTemplate));
-
-const backBtnHandler = () => {
-  changeScreen(introTemplate);
+const formSubmitHandler = (evt) => {
+  evt.preventDefault();
+  localStorage.setItem(`userName`, rulesInput.value);
 };
 
-backBtn.addEventListener(`click`, backBtnHandler);
+rulesInput.addEventListener(`input`, rulesInputHandler);
+rulesForm.addEventListener(`submit`, formSubmitHandler);
+
+rulesBtn.addEventListener(`click`, () => changeScreen(gameOneTemplate));
 
 export default rulesTemplate;

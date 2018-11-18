@@ -1,6 +1,6 @@
-import {render, changeScreen} from './util.js';
-import statsTemplate from './stats.js';
-import introTemplate from './intro.js';
+import {render, changeScreen} from './util';
+import statsTemplate from './stats';
+import backToGreeting from './back';
 
 const gameThreeTemplate = render(`<header class="header">
     <button class="back">
@@ -47,17 +47,15 @@ const gameThreeTemplate = render(`<header class="header">
   </section>`);
 
 const gameOptions = gameThreeTemplate.querySelectorAll(`.game__option`);
-const backBtn = statsTemplate.querySelector(`.back`);
+const backBtn = gameThreeTemplate.querySelector(`.back`);
+
+backToGreeting(backBtn);
 
 const gameOptionClickHandler = () => {
   changeScreen(statsTemplate);
 };
 gameOptions.forEach(function (it) {
   it.addEventListener(`click`, gameOptionClickHandler);
-});
-
-backBtn.addEventListener(`click`, () => {
-  changeScreen(introTemplate);
 });
 
 export default gameThreeTemplate;
