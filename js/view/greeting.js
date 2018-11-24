@@ -1,7 +1,9 @@
-import {render, changeScreen} from './util';
-import rulesTemplate from './rules';
+import {renderElement, containScreenBlocks, changeScreen} from '../util/util';
+import footer from './footer';
+import rules from './rules';
 
-const greetingTemplate = render(`<section class="greeting central--blur">
+const greetingTemplate = `
+  <section class="greeting central--blur">
     <img class="greeting__logo" src="img/logo_ph-big.svg" width="201" height="89" alt="Pixel Hunter">
     <div class="greeting__asterisk asterisk"><span class="visually-hidden">Я просто красивая звёздочка</span>*</div>
     <div class="greeting__challenge">
@@ -20,10 +22,21 @@ const greetingTemplate = render(`<section class="greeting central--blur">
         <use xlink:href="img/sprite.svg#arrow-right"></use>
       </svg>
     </button>
-  </section>`);
+  </section>
+`;
 
-const rulesButton = greetingTemplate.querySelector(`.greeting__continue`);
+const greeting = () => {
+  const greetingElement = renderElement(greetingTemplate);
+  const greetingScreen = containScreenBlocks(greetingElement, footer()
+  );
 
-rulesButton.addEventListener(`click`, () => changeScreen(rulesTemplate));
+  const greetingContinueBtn = greetingScreen.querySelector(`.greeting__continue`);
+  const greetingBtnHandler = () =>
+    changeScreen(rules());
 
-export default greetingTemplate;
+  greetingContinueBtn.addEventListener(`click`, greetingBtnHandler);
+
+  return greetingScreen;
+};
+
+export default greeting;

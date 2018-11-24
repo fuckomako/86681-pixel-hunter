@@ -1,4 +1,4 @@
-import {changeScreen} from './util';
-import introTemplate from './intro';
+import {changeScreen} from './util/util';
+import intro from './view/intro';
 
-changeScreen(introTemplate);
+changeScreen(intro());
