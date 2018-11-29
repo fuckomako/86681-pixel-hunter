@@ -1,4 +1,4 @@
-import {changeScreen} from './util/util';
-import intro from './view/intro';
+import {renderScreen} from './util/util';
+import getWellcomeScreen from './screens/screen-wellcome';
 
-changeScreen(intro());
+renderScreen(getWellcomeScreen());

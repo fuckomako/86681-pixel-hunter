@@ -1,9 +1,14 @@
-import {renderElement, containScreenBlocks, changeScreen} from '../util/util';
-import footer from './footer';
-import rules from './rules';
+import AbstractView from './abstract-view';
+import footerTemplate from '../template/template-footer';
 
-const greetingTemplate = `
-  <section class="greeting central--blur">
+export default class GreetingView extends AbstractView {
+  constructor() {
+    super();
+  }
+
+  get template() {
+    return `
+    <section class="greeting central--blur">
     <img class="greeting__logo" src="img/logo_ph-big.svg" width="201" height="89" alt="Pixel Hunter">
     <div class="greeting__asterisk asterisk"><span class="visually-hidden">Я просто красивая звёздочка</span>*</div>
     <div class="greeting__challenge">
@@ -18,25 +23,17 @@ const greetingTemplate = `
     </div>
     <button class="greeting__continue" type="button">
       <span class="visually-hidden">Продолжить</span>
-      <svg class="icon" width="64" height="64" viewBox="0 0 64 64" fill="#000000">
-        <use xlink:href="img/sprite.svg#arrow-right"></use>
-      </svg>
+      <img class="greeting__logo" src="img/arrow-right.svg" width="64" height="64" alt="Продолжить">
     </button>
   </section>
-`;
+    ${footerTemplate}
+    `;
+  }
 
-const greeting = () => {
-  const greetingElement = renderElement(greetingTemplate);
-  const greetingScreen = containScreenBlocks(greetingElement, footer()
-  );
+  onContinueBtnClick() { }
 
-  const greetingContinueBtn = greetingScreen.querySelector(`.greeting__continue`);
-  const greetingBtnHandler = () =>
-    changeScreen(rules());
-
-  greetingContinueBtn.addEventListener(`click`, greetingBtnHandler);
-
-  return greetingScreen;
-};
-
-export default greeting;
+  bind() {
+    const continueBtn = this.element.querySelector(`.greeting__continue`);
+    continueBtn.addEventListener(`click`, this.onContinueBtnClick);
+  }
+}
