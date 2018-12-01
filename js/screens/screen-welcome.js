@@ -1,9 +1,9 @@
 import {renderScreen} from '../util/util';
-import WellcomeView from '../view/view-wellcome';
+import WelcomeView from '../view/view-welcome';
 import getGreetingScreen from './screen-greeting';
 
-const getWellcomeScreen = () => {
-  const intro = new WellcomeView();
+const getWelcomeScreen = () => {
+  const intro = new WelcomeView();
 
   intro.onStartButtonClick = () => renderScreen(getGreetingScreen());
 
@@ -11,4 +11,4 @@ const getWellcomeScreen = () => {
   return introScreen;
 };
 
-export default getWellcomeScreen;
+export default getWelcomeScreen;

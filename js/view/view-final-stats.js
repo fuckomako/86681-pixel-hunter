@@ -1,7 +1,7 @@
 import AbstractView from './abstract-view';
 import headerLogoTemplate from '../template/template-header-logo';
 import footerTemplate from '../template/template-footer';
-import flowStatsTemplate from '../template/template-flowStats';
+import flowStatsTemplate from '../template/template-stats';
 
 export default class FinalStatsView extends AbstractView {
   constructor(finalResult, score) {

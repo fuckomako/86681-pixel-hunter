@@ -6,10 +6,6 @@ import {resetGame, playGame} from './screen-game';
 const getRulesScreen = () => {
   const rules = new RulesView();
 
-  rules.onInputChange = (input, submitBtn) => {
-    submitBtn.disabled = !input.value.length;
-  };
-
   rules.onFormSubmit = (form) => {
     resetGame();
     renderScreen(playGame());

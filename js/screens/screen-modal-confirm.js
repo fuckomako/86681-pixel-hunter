@@ -1,5 +1,5 @@
 import {renderScreen} from '../util/util';
-import ModalConfirmView from '../view/view-modalConfirm';
+import ModalConfirmView from '../view/view-modal-confirm';
 import getGreetingScreen from './screen-greeting';
 
 const getModalConfirmScreen = () => {

@@ -1,4 +1,4 @@
 import {renderScreen} from './util/util';
-import getWellcomeScreen from './screens/screen-wellcome';
+import getWelcomeScreen from './screens/screen-welcome';
 
-renderScreen(getWellcomeScreen());
+renderScreen(getWelcomeScreen());

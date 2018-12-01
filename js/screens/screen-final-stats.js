@@ -1,5 +1,5 @@
 import {renderScreen} from '../util/util';
-import FinalStatsView from '../view/view-finalStats';
+import FinalStatsView from '../view/view-final-stats';
 import getGreetingScreen from './screen-greeting';
 import {fixGameState} from './screen-game';
 

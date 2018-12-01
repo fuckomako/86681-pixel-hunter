@@ -3,7 +3,7 @@ import {questions} from '../data/game-data';
 import headerLogoTemplate from '../template/template-header-logo';
 import headerTimerTemplate from '../template/template-header-timer';
 import headerLivesTemplate from '../template/template-header-lives';
-import flowStatsTemplate from '../template/template-flowStats';
+import flowStatsTemplate from '../template/template-stats';
 import footerTemplate from '../template/template-footer';
 
 const questionCategory = questions.find((question) => question.category === `oneImage`);
@@ -44,21 +44,27 @@ export default class Question1View extends AbstractView {
     `;
   }
 
-  onRadioChange() { }
   onLogoClick() { }
+  onAnswer() { }
 
   bind() {
     const form = this.element.querySelector(`.game__content`);
     const option = this.element.querySelector(`.game__option`);
 
     form.addEventListener(`click`, () => {
-      this.onRadioChange(form, option);
+      const option1Value = option.dataset.type;
+      const answer1Value = form.question1.value;
+
+      if (answer1Value) {
+        this.onAnswer(option1Value === answer1Value);
+      }
     });
 
     const logoBtn = this.element.querySelector(`.back`);
     logoBtn.addEventListener(`click`, () => {
       this.onLogoClick();
     });
+
   }
 }
 

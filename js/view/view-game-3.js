@@ -3,7 +3,7 @@ import {questions} from '../data/game-data';
 import headerLogoTemplate from '../template/template-header-logo';
 import headerTimerTemplate from '../template/template-header-timer';
 import headerLivesTemplate from '../template/template-header-lives';
-import flowStatsTemplate from '../template/template-flowStats';
+import flowStatsTemplate from '../template/template-stats';
 import footerTemplate from '../template/template-footer';
 
 const questionCategory = questions.find((question) => question.category === `threeImages`);
@@ -35,8 +35,8 @@ export default class Question3View extends AbstractView {
     `;
   }
 
-  onImageClick() { }
   onLogoClick() { }
+  onAnswer() { }
 
   bind() {
     const options = this.element.querySelectorAll(`.game__option`);
@@ -45,7 +45,7 @@ export default class Question3View extends AbstractView {
       option.querySelector(`img`).style.pointerEvents = `none`; // для firefox
       option.addEventListener(`click`, (evt) => {
         const target = evt.target;
-        this.onImageClick(target);
+        this.onAnswer(target);
       });
     });
 

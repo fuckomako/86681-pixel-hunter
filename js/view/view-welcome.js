@@ -1,7 +1,7 @@
 import AbstractView from './abstract-view';
 import footerTemplate from '../template/template-footer';
 
-export default class WellcomeView extends AbstractView {
+export default class WelcomeView extends AbstractView {
   constructor() {
     super();
   }

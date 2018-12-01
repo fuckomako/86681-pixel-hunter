@@ -3,7 +3,7 @@ import {questions} from '../data/game-data';
 import headerLogoTemplate from '../template/template-header-logo';
 import headerTimerTemplate from '../template/template-header-timer';
 import headerLivesTemplate from '../template/template-header-lives';
-import flowStatsTemplate from '../template/template-flowStats';
+import flowStatsTemplate from '../template/template-stats';
 import footerTemplate from '../template/template-footer';
 
 const questionCategory = questions.find((question) => question.category === `twoImages`);
@@ -44,15 +44,33 @@ export default class Question2View extends AbstractView {
     `;
   }
 
-  onRadioChange() { }
   onLogoClick() { }
+  onAnswer() { }
 
   bind() {
     const form = this.element.querySelector(`.game__content`);
     const options = this.element.querySelectorAll(`.game__option`);
 
     form.addEventListener(`click`, () => {
-      this.onRadioChange(form, ...options);
+      let option1Value;
+      let option2Value;
+
+      options.forEach((option) => {
+        if (option.dataset.number === `1`) {
+          option1Value = option.dataset.type;
+        }
+        if (option.dataset.number === `2`) {
+          option2Value = option.dataset.type;
+        }
+      });
+
+      const answer1Value = form.question1.value;
+      const answer2Value = form.question2.value;
+
+      if (answer1Value && answer2Value) {
+        this.onAnswer((option1Value === answer1Value) && (option2Value === answer2Value)
+        );
+      }
     });
 
     const logoBtn = this.element.querySelector(`.back`);
