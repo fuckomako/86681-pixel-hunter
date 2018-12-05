@@ -1,26 +1,23 @@
 import AbstractView from './abstract-view';
-import headerLogoTemplate from '../template/template-header-logo';
-import footerTemplate from '../template/template-footer';
-import flowStatsTemplate from '../template/template-stats';
+import statsBarTemplate from '../templates/template-stats-bar';
+import getScore from '../data/get-score';
 
-export default class FinalStatsView extends AbstractView {
-  constructor(finalResult, score) {
+export default class StatsView extends AbstractView {
+  constructor(gameState) {
     super();
-    this.finalResult = finalResult;
-    this.score = score;
+    this.gameState = gameState;
+    this.score = getScore(this.gameState.answers, this.gameState.lives);
   }
 
   get template() {
     return `
-    <header class="header">
-    ${headerLogoTemplate}</header>
   <div class="result">
-    <h1>${this.finalResult.lives > 0 ? `Победа` : `Поражение`}</h1>
+    <h1>${this.gameState.lives > 0 ? `Победа` : `Поражение`}</h1>
     <table class="result__table">
       <tr>
         <td class="result__number">1.</td>
         <td colspan="2" class="result__indicators">
-          ${flowStatsTemplate(this.finalResult)}
+          ${statsBarTemplate(this.gameState)}
         </td>
         <td class="result__points">×&nbsp;100</td>
         <td class="result__total">${this.score.correctAnswers.points}
@@ -51,21 +48,11 @@ export default class FinalStatsView extends AbstractView {
         <td class="result__total">${this.score.slowResponse.points}</td>
       </tr>
       <tr>
-        <td colspan="5" class="result__total  result__total--final">${this.score.totalPoints}
+        <td colspan="5" class="result__total  result__total--final">${this.score.getTotalScore()}
         </td>
       </tr>
     </table>
   </div>
-    ${footerTemplate}
     `;
-  }
-
-  onLogoClick() { }
-
-  bind() {
-    const logoBtn = this.element.querySelector(`.back`);
-    logoBtn.addEventListener(`click`, () => {
-      this.onLogoClick();
-    });
   }
 }

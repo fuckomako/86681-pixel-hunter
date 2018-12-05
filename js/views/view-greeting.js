@@ -1,5 +1,4 @@
 import AbstractView from './abstract-view';
-import footerTemplate from '../template/template-footer';
 
 export default class GreetingView extends AbstractView {
   constructor() {
@@ -23,10 +22,11 @@ export default class GreetingView extends AbstractView {
     </div>
     <button class="greeting__continue" type="button">
       <span class="visually-hidden">Продолжить</span>
-      <img class="greeting__logo" src="img/arrow-right.svg" width="64" height="64" alt="Продолжить">
+      <svg class="icon" width="64" height="64" viewBox="0 0 64 64" fill="#000000">
+        <use xlink:href="img/sprite.svg#arrow-right"></use>
+      </svg>
     </button>
   </section>
-    ${footerTemplate}
     `;
   }
 
@@ -34,6 +34,6 @@ export default class GreetingView extends AbstractView {
 
   bind() {
     const continueBtn = this.element.querySelector(`.greeting__continue`);
-    continueBtn.addEventListener(`click`, this.onContinueBtnClick);
+    continueBtn.addEventListener(`click`, () => this.onContinueBtnClick());
   }
 }

@@ -1,11 +1,11 @@
-import {createDomElement} from '../util/util';
+import {createDomElement} from '../utils/util';
 
 class AbstractView {
   constructor() {
     if (new.target === AbstractView) {
       throw new Error(`Can't instantiate AbstractView, only concrete one`);
     }
-  } // запрещает создавать базовый класс, без наследования
+  }
 
   get template() {
     throw new Error(`Template is required`);

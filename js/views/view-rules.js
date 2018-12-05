@@ -1,6 +1,4 @@
 import AbstractView from './abstract-view';
-import headerLogoTemplate from '../template/template-header-logo';
-import footerTemplate from '../template/template-footer';
 
 export default class RulesView extends AbstractView {
   constructor() {
@@ -9,9 +7,6 @@ export default class RulesView extends AbstractView {
 
   get template() {
     return `
-    <header class="header">
-    ${headerLogoTemplate}
-    </header>
     <section class="rules">
     <h2 class="rules__title">Правила</h2>
     <ul class="rules__description">
@@ -28,12 +23,10 @@ export default class RulesView extends AbstractView {
       <button class="rules__button  continue" type="submit" disabled>Go!</button>
     </form>
   </section>
-    ${footerTemplate}
     `;
   }
 
   onFormSubmit() { }
-  onLogoClick() { }
 
   bind() {
     const submitBtn = this.element.querySelector(`.rules__button`);
@@ -46,14 +39,8 @@ export default class RulesView extends AbstractView {
 
     input.addEventListener(`input`, onNameInput);
 
-
     form.addEventListener(`change`, () => {
-      this.onFormSubmit(form, submitBtn);
-    });
-
-    const logoBtn = this.element.querySelector(`.back`);
-    logoBtn.addEventListener(`click`, () => {
-      this.onLogoClick();
+      this.onFormSubmit();
     });
   }
 }

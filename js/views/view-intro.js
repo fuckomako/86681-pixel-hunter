@@ -1,7 +1,6 @@
 import AbstractView from './abstract-view';
-import footerTemplate from '../template/template-footer';
 
-export default class WelcomeView extends AbstractView {
+export default class IntroView extends AbstractView {
   constructor() {
     super();
   }
@@ -12,14 +11,13 @@ export default class WelcomeView extends AbstractView {
     <button class="intro__asterisk asterisk" type="button"><span class="visually-hidden">Продолжить</span>*</button>
     <p class="intro__motto"><sup>*</sup> Это не фото. Это рисунок маслом нидерландского художника-фотореалиста Tjalf Sparnaay.</p>
     </section>
-    ${footerTemplate}
     `;
   }
 
-  onStartButtonClick() { }
+  onStartBtnClick() { }
 
   bind() {
-    const startButton = this.element.querySelector(`.intro__asterisk`);
-    startButton.addEventListener(`click`, this.onStartButtonClick);
+    const startBtn = this.element.querySelector(`.intro__asterisk`);
+    startBtn.addEventListener(`click`, () => this.onStartBtnClick());
   }
 }

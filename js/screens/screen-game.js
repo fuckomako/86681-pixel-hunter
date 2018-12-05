@@ -1,5 +1,4 @@
-import {TimeLimits} from '../util/constants';
-
+import {TimeLimits} from '../utils/constants';
 import HeaderView from '../views/view-header';
 import QuestionViewClassify from '../views/view-question-classify';
 import QuestionViewChoose from '../views/view-question-choose';
