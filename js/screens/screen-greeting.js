@@ -1,14 +1,19 @@
-import {renderScreen} from '../util/util';
-import GreetingView from '../view/view-greeting';
-import getRulesScreen from './screen-rules';
+import GreetingView from '../views/view-greeting';
+import FooterView from '../views/view-footer';
 
-const getGreetingScreen = () => {
-  const greeting = new GreetingView();
+export default class GreetingScreen {
+  constructor() {
+    this.content = new GreetingView();
+    this.footer = new FooterView();
 
-  greeting.onContinueBtnClick = () => renderScreen(getRulesScreen());
+    this.root = document.createElement(`div`);
+    this.root.appendChild(this.content.element);
+    this.root.appendChild(this.footer.element);
+  }
 
-  const greetingScreen = greeting.element;
-  return greetingScreen;
-};
+  showNextScreen() { }
 
-export default getGreetingScreen;
+  init() {
+    this.content.onContinueBtnClick = this.showNextScreen;
+  }
+}

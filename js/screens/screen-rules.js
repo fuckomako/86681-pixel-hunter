@@ -1,22 +1,26 @@
-import {renderScreen} from '../util/util';
-import RulesView from '../view/view-rules';
-import getGreetingScreen from './screen-greeting';
-import {resetGame, playGame} from './screen-game';
+import HeaderView from '../views/view-header';
+import RulesView from '../views/view-rules';
+import FooterView from '../views/view-footer';
 
-const getRulesScreen = () => {
-  const rules = new RulesView();
+export default class RulesScreen {
+  constructor() {
+    this.header = new HeaderView();
+    this.content = new RulesView();
+    this.footer = new FooterView();
 
-  rules.onFormSubmit = (form) => {
-    resetGame();
-    renderScreen(playGame());
-    form.reset();
-  };
+    this.root = document.createElement(`div`);
+    this.root.appendChild(this.header.element);
+    this.root.appendChild(this.content.element);
+    this.root.appendChild(this.footer.element);
+  }
 
-  rules.onLogoClick = () => renderScreen(getGreetingScreen());
+  showGreetScreen() { }
+  showNextScreen() { }
 
-  const rulesScreen = rules.element;
-  return rulesScreen;
-};
+  init() {
+    this.header.onLogoClick = this.showGreetScreen;
 
-export default getRulesScreen;
+    this.content.onFormSubmit = this.showNextScreen;
+  }
+}
 

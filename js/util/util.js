@@ -1,12 +1,5 @@
-export const createDomElement = (element) => {
-  const template = document.createElement(`template`);
-  template.innerHTML = element;
-  return template.content;
+export const createDomElement = (html) => {
+  const wrapper = document.createElement(`div`);
+  wrapper.innerHTML = html.trim();
+  return wrapper;
 };
-
-const mainPage = document.querySelector(`#main`);
-export const renderScreen = (screen) => {
-  mainPage.innerHTML = ``;
-  mainPage.appendChild(screen);
-};
-

@@ -1,5 +1,3 @@
-export const NUMBER_OF_GAMES = 10;
-
 const pictures = {
   paintings: [
     `https://k42.kn3.net/CF42609C8.jpg`,
@@ -18,10 +16,12 @@ export const questions = [
     category: `oneImage`,
     description: `Угадай, фото или рисунок?`,
     images: 1,
+    type: `classify`,
+    inner: `game__content  game__content--wide`,
     params: [
       {
         index: 1,
-        type: `paint`,
+        class: `paint`,
         src: pictures.paintings[0]
       }
     ]
@@ -31,54 +31,74 @@ export const questions = [
     category: `twoImages`,
     description: `Угадайте для каждого изображения фото или рисунок?`,
     images: 2,
+    type: `classify`,
+    inner: `game__content`,
     params: [
       {
         index: 1,
-        type: `paint`,
+        class: `paint`,
         src: pictures.paintings[1]
       },
 
       {
         index: 2,
-        type: `photo`,
+        class: `photo`,
         src: pictures.photos[0]
       }
     ]
   },
 
   {
-    category: `threeImages`,
+    category: `threeImagesPaint`,
     description: `Найдите рисунок среди изображений`,
     images: 3,
+    type: `choose`,
+    answerCorrect: `paint`,
     params: [
       {
         index: 1,
-        type: `paint`,
+        class: `paint`,
         src: pictures.paintings[2]
       },
 
       {
         index: 2,
-        type: `photo`,
+        class: `photo`,
         src: pictures.photos[1]
       },
 
       {
         index: 3,
-        type: `photo`,
+        class: `photo`,
         src: pictures.photos[2]
+      }
+    ]
+  },
+
+  {
+    category: `threeImagesPhoto`,
+    description: `Найдите фотографию среди изображений`,
+    images: 3,
+    type: `choose`,
+    answerCorrect: `photo`,
+    params: [
+      {
+        index: 1,
+        class: `paint`,
+        src: pictures.paintings[0]
+      },
+
+      {
+        index: 2,
+        class: `paint`,
+        src: pictures.paintings[1]
+      },
+
+      {
+        index: 3,
+        class: `photo`,
+        src: pictures.photos[1]
       }
     ]
   }
 ];
-
-// создает карту игр (массив из 10 рандомных типов игр)
-export const getGameOrder = () => {
-  const gameTypes = questions.map((it) => it.category);
-
-  const gameOrder = [];
-  for (let i = 0; i < NUMBER_OF_GAMES; i++) {
-    gameOrder[i] = gameTypes[Math.floor(Math.random() * (gameTypes.length))];
-  }
-  return gameOrder;
-};

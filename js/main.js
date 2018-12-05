@@ -1,4 +1,3 @@
-import {renderScreen} from './util/util';
-import getWelcomeScreen from './screens/screen-welcome';
+import App from './application';
 
-renderScreen(getWelcomeScreen());
+App.showWelcome();

@@ -1,15 +1,20 @@
-import {renderScreen} from '../util/util';
-import ModalConfirmView from '../view/view-modal-confirm';
-import getGreetingScreen from './screen-greeting';
+import ModalConfirmView from '../views/view-modal-confirm';
 
-const getModalConfirmScreen = () => {
-  const modalConfirm = new ModalConfirmView();
-  const modalConfirmScreen = modalConfirm.element;
+export default class ModalConfirmScreen {
+  constructor() {
+    this.content = new ModalConfirmView();
 
-  modalConfirm.onConfirm = () => renderScreen(getGreetingScreen());
+    this.root = document.createElement(`div`);
+    this.root.appendChild(this.content.element);
+  }
 
-  return modalConfirmScreen;
-};
+  showGreetScreen() { }
 
-export default getModalConfirmScreen;
+  init() {
+    this.content.onConfirm = this.showGreetScreen;
 
+    this.content.onCancel = (modalWrapper) => {
+      modalWrapper.classList.add(`modal--hidden`);
+    };
+  }
+}
