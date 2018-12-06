@@ -13,8 +13,8 @@ export default class ModalConfirmScreen {
   init() {
     this.content.onConfirm = this.showGreetScreen;
 
-    this.content.onCancel = (modalWrapper) => {
-      modalWrapper.classList.add(`modal--hidden`);
+    this.content.onCancel = (modalElement) => {
+      modalElement.classList.add(`modal--hidden`);
     };
   }
 }

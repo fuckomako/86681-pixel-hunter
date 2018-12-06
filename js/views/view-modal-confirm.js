@@ -31,6 +31,7 @@ export default class ModalConfirmView extends AbstractView {
   onCancel() { }
 
   bind() {
+    const modalElement = this.element.querySelector(`.modal`);
     this._modalCloseElement = this.element.querySelector(`.modal__close`);
     this._modalCancelElement = this.element.querySelector(`.modal__btn:last-child`);
     this._modalOkElement = this.element.querySelector(`.modal__btn:first-child`);
@@ -38,13 +39,13 @@ export default class ModalConfirmView extends AbstractView {
     const onCloseElementClick = (evt) => {
       this.hide();
       evt.preventDefault();
-      this.onCancel();
+      this.onCancel(modalElement);
     };
 
     const onCancelElementClick = (evt) => {
       this.hide();
       evt.preventDefault();
-      this.onCancel();
+      this.onCancel(modalElement);
     };
 
     const onOkElementClick = (evt) => {
@@ -57,7 +58,7 @@ export default class ModalConfirmView extends AbstractView {
       if (evt.key === `Escape`) {
         this.hide();
         evt.preventDefault();
-        this.onCancel();
+        this.onCancel(modalElement);
       }
     };
 
