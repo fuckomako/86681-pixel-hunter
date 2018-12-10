@@ -1,30 +1,34 @@
 import AbstractView from './abstract-view';
 import statsBarTemplate from '../templates/template-stats-bar';
-import {resize} from '../data/resize';
+import {resize} from '../utils/resize';
 
 export default class QuestionViewChoose extends AbstractView {
   constructor(question, gameState) {
     super();
     this.question = question;
     this.gameState = gameState;
+
+    this.answerCorrect = this.question.description === `Найдите рисунок среди изображений` ? `paint` : `photo`;
   }
 
   get template() {
     return `
-    <div class="game">
+    <section class="game">
     <p class="game__task">${this.question.description}</p>
-    <form class="game__content game__content--triple">
-    ${[...this.question.params].map((param) => `
-      <div class="game__option" data-type="${param.class}">
-      <img src="${param.src}" alt="Option 1" width="304" height="455">
+    <form class="${this.question.inner}">
+    ${[...this.question.answers].map((answer) => `
+      <div class="game__option" data-type="${answer.class}">
+      <img src="${answer.src}" alt="Option 1">
       </div>`).join(``)}
     </form>
-    ${statsBarTemplate(this.gameState)}
-    </div>
+    ${statsBarTemplate(this.gameState.answers)}
+    </section>
     `;
   }
 
-  onAnswer() { }
+  onAnswer() {
+  }
+
   onGameImageLoad(image) {
 
     image.parentNode.style.display = `block`;
@@ -46,23 +50,22 @@ export default class QuestionViewChoose extends AbstractView {
   }
 
   bind() {
-
     const images = this.element.querySelectorAll(`.game__option > img`);
     images.forEach((image) => {
       image.parentNode.style.display = `none`;
       image.style.pointerEvents = `none`; // для firefox click
 
       image.addEventListener(`load`, () => {
-        this.onGameImageLoad(image);
+        return this.onGameImageLoad(image);
       });
     });
 
-    const options = this.element.querySelectorAll(`.game__option`);
 
+    const options = this.element.querySelectorAll(`.game__option`);
     options.forEach((option) => {
       option.addEventListener(`click`, (evt) => {
         const target = evt.target;
-        const result = target.dataset.type === this.question.answerCorrect;
+        const result = target.dataset.type === this.answerCorrect;
 
         this.onAnswer(result);
       });

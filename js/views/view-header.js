@@ -8,7 +8,6 @@ export default class HeaderView extends AbstractView {
 
   _logo() {
     return `
-    <header class="header">
       <button class="back">
       <span class="visually-hidden">Вернуться к началу</span>
       <svg class="icon" width="45" height="45" viewBox="0 0 45 45" fill="#000000">
@@ -17,8 +16,7 @@ export default class HeaderView extends AbstractView {
       <svg class="icon" width="101" height="44" viewBox="0 0 101 44" fill="#000000">
         <use xlink:href="img/sprite.svg#logo-small"></use>
       </svg>
-    </button>
-    </header>`;
+    </button>`;
   }
 
   get template() {
@@ -29,11 +27,11 @@ export default class HeaderView extends AbstractView {
         <div class="game__timer">${this.gameState.time}</div>
         <div class="game__lives">
           ${new Array(3 - this.gameState.lives)
-          .fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Life" width="32" height="32">`)
-          .join(``)}
+        .fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Missed Life" width="31" height="27">`)
+        .join(``)}
           ${new Array(this.gameState.lives)
-          .fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="32" height="32">`)
-          .join(``)}
+        .fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`)
+        .join(``)}
         </div>
       </header>`;
     } else {
@@ -44,10 +42,26 @@ export default class HeaderView extends AbstractView {
     }
   }
 
+  update(time) {
+    if (time !== this._time) {
+      this._timeElement.textContent = time;
+      this._time = time;
+    }
+  }
+
   onLogoClick() { }
 
   bind() {
+    this._timeElement = this.element.querySelector(`.game__timer`);
+
     const logo = this.element.querySelector(`.back`);
     logo.addEventListener(`click`, () => this.onLogoClick());
+
+    if (this.gameState) {
+      const timer = this.element.querySelector(`.game__timer`);
+      if (this.gameState.time < 6) {
+        timer.classList.add(`game__timer--blink`);
+      }
+    }
   }
 }

@@ -23,4 +23,3 @@ export default class RulesScreen {
     this.content.onFormSubmit = this.showNextScreen;
   }
 }
-

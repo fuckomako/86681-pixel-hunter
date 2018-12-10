@@ -1,6 +1,6 @@
 import AbstractView from './abstract-view';
 import statsBarTemplate from '../templates/template-stats-bar';
-import {resize} from '../data/resize';
+import {resize} from '../utils/resize';
 
 export default class QuestionViewClassify extends AbstractView {
   constructor(question, gameState) {
@@ -11,25 +11,25 @@ export default class QuestionViewClassify extends AbstractView {
 
   get template() {
     return `
-    <div class="game">
+    <section class="game">
     <p class="game__task">${this.question.description}</p>
     <form class="${this.question.inner}">
-    ${[...this.question.params].map((param) => `
-      <div class="game__option" data-type="${param.class}" data-number="${param.index}">
-      <img src="${param.src}" alt="Option ${param.index}" width="705" height="455">
+    ${[...this.question.answers].map((answer, index) => `
+      <div class="game__option" data-type="${answer.class}">
+      <img src="${answer.src}" alt="Option ${index + 1}">
       <label class="game__answer  game__answer--photo">
-      <input class="visually-hidden" name="question${param.index}" type="radio" value="photo">
+      <input class="visually-hidden" name="question${index + 1}" type="radio" value="photo">
       <span>Фото</span>
       </label>
       <label class="game__answer  game__answer--wide  game__answer--paint">
-      <input class="visually-hidden" name="question${param.index}" type="radio" value="paint">
+      <input class="visually-hidden" name="question${index + 1}" type="radio" value="paint">
       <span>Рисунок</span>
       </label>
       </div>
       `).join(``)}
     </form>
-    ${statsBarTemplate(this.gameState)}
-    </div>
+    ${statsBarTemplate(this.gameState.answers)}
+    </section>
     `;
   }
 

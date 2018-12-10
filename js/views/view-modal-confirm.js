@@ -66,6 +66,6 @@ export default class ModalConfirmView extends AbstractView {
     this._modalCancelElement.addEventListener(`click`, onCancelElementClick);
     this._modalOkElement.addEventListener(`click`, onOkElementClick);
     this._modalOkElement.focus();
-    document.addEventListener(`keydown`, onEscKeyDown); // указывая в начале this не работает(видимо теряет окружение)
+    document.addEventListener(`keydown`, onEscKeyDown);
   }
 }

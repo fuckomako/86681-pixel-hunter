@@ -1,8 +1,9 @@
 import {GameConcept, TimeLimits} from '../utils/constants';
-import {questions} from '../data/game-data';
 
 export default class GameModel {
-  constructor() {
+  constructor(gameData, playerName) {
+    this.gameData = gameData;
+    this.playerName = playerName;
     this.restartGame();
   }
 
@@ -13,23 +14,10 @@ export default class GameModel {
       lives: GameConcept.NUMBER_OF_LIVES,
       answers: []
     };
-
-    this._gameOrder = this.createGameOrder();
-  }
-
-  createGameOrder() {
-    const gameTypes = questions.map((it) => it.category);
-
-    const gameOrder = [];
-    for (let i = 0; i < GameConcept.NUMBER_OF_GAMES; i++) {
-      gameOrder[i] = gameTypes[Math.floor(Math.random() * (gameTypes.length))];
-    }
-    return gameOrder;
   }
 
   renewQuestionType() {
-    this._question = questions.find((question) =>
-      question.category === this._gameOrder[this._gameState.level]);
+    this._question = this.gameData[this._gameState.level];
     return this._question;
   }
 
@@ -53,7 +41,7 @@ export default class GameModel {
     this._gameState.time--;
   }
 
-  restartTimer() {
+  renewTimer() {
     this._gameState.time = TimeLimits.INITIAL_TIMER;
   }
 
