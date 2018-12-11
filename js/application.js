@@ -14,8 +14,8 @@ export default class Application {
     Loader.loadData()
     .then((data) => {
       this.gameData = data;
+      Application.showGreeting(true);
     })
-    .then(Application.showGreeting(true))
     .catch(Application.showError);
   }
 
