@@ -26,7 +26,7 @@ export default class GameModel {
   }
 
   isDead() {
-    return this._gameState.lives === 0;
+    return this._gameState.lives < 0;
   }
 
   nextLevel() {

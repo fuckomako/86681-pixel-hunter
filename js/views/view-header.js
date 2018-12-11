@@ -1,4 +1,14 @@
 import AbstractView from './abstract-view';
+import {GameConcept} from '../utils/constants';
+
+const generateLivesTemplate = (lives, maxLives) => {
+  const emptyLives = new Array(maxLives - Math.max(0, lives))
+    .fill(`<img src="img/heart__empty.svg" class="game__heart" alt=" Missed Life" width="31" height="27">`);
+  const fullLives = new Array(Math.max(0, lives))
+    .fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`);
+
+  return emptyLives.concat(fullLives).join(``);
+};
 
 export default class HeaderView extends AbstractView {
   constructor(gameState) {
@@ -26,12 +36,7 @@ export default class HeaderView extends AbstractView {
         ${this._logo()}
         <div class="game__timer">${this.gameState.time}</div>
         <div class="game__lives">
-          ${new Array(3 - this.gameState.lives)
-        .fill(`<img src="img/heart__empty.svg" class="game__heart" alt="Missed Life" width="31" height="27">`)
-        .join(``)}
-          ${new Array(this.gameState.lives)
-        .fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`)
-        .join(``)}
+           ${generateLivesTemplate(this.gameState.lives, GameConcept.NUMBER_OF_LIVES)}
         </div>
       </header>`;
     } else {
@@ -42,10 +47,14 @@ export default class HeaderView extends AbstractView {
     }
   }
 
-  update(time) {
+  update(time, lives) {
     if (time !== this._time) {
       this._timeElement.textContent = time;
       this._time = time;
+    }
+    if (lives !== this.lives) {
+      this._livesElement.innerHTML = generateLivesTemplate(lives, GameConcept.NUMBER_OF_LIVES);
+      this._lives = lives;
     }
   }
 
@@ -53,6 +62,7 @@ export default class HeaderView extends AbstractView {
 
   bind() {
     this._timeElement = this.element.querySelector(`.game__timer`);
+    this._livesElement = this.element.querySelector(`.game__lives`);
 
     const logo = this.element.querySelector(`.back`);
     logo.addEventListener(`click`, () => this.onLogoClick());

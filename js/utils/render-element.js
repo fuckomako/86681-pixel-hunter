@@ -1,4 +1,4 @@
-const mainPage = document.querySelector(`main`);
+const mainPage = document.querySelector(`#main`);
 
 export const showScreen = (element) => {
   mainPage.innerHTML = ``;

@@ -100,7 +100,7 @@ export default class GameScreen {
   }
 
   updateTimer() {
-    this.header.update(this.model.gameState.time);
+    this.header.update(this.model.gameState.time, this.model.gameState.lives);
   }
 
   updateScreen() {
