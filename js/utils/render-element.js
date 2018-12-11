@@ -6,7 +6,7 @@ export const showScreen = (element) => {
 };
 
 export const showModal = (element) => {
-  mainPage.appendChild(element);
+  document.body.appendChild(element);
 };
 
 export const showScreenWithAnimation = (element) => {
