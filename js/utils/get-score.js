@@ -1,22 +1,24 @@
-import {ScoringRules} from '../utils/constants';
+import {ScoringRules} from './constants';
 
-const getScore = (answers, lives) => {
+export default (answers, lives) => {
 
   let gameResult = {
     correctAnswers: {
-      count: answers.filter((answer) => answer.isCorrect).length,
+      count: answers.filter((answer) => {
+        return answer === `correct` || answer === `fast` || answer === `slow`;
+      }).length,
       get points() {
         return this.count * ScoringRules.CORRECT_ANSWER;
       }
     },
     fastResponse: {
-      count: answers.filter((answer) => answer.isFast).length,
+      count: answers.filter((answer) => answer === `fast`).length,
       get points() {
         return this.count * ScoringRules.FAST_RESPONSE;
       }
     },
     slowResponse: {
-      count: answers.filter((answer) => answer.isSlow).length,
+      count: answers.filter((answer) => answer === `slow`).length,
       get points() {
         return this.count * ScoringRules.SLOW_RESPONSE;
       }
@@ -36,6 +38,4 @@ const getScore = (answers, lives) => {
 
   return gameResult;
 };
-
-export default getScore;
 
