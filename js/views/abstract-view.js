@@ -2,7 +2,7 @@ import createDomElement from '../utils/create-element';
 
 export default class AbstractView {
   constructor() {
-    if (new.target === AbstractView) {
+    if (this.constructor === AbstractView) {
       throw new Error(`Can't instantiate AbstractView, only concrete one`);
     }
   }
@@ -24,5 +24,6 @@ export default class AbstractView {
     return createDomElement(this.template);
   }
 
-  bind() {}
+  bind() {
+  }
 }

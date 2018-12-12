@@ -1,6 +1,7 @@
 import AbstractView from './abstract-view';
 import statsBarTemplate from '../templates/template-stats-bar';
-import {resize} from '../utils/resize';
+import renderImages from '../utils/resize';
+import renderDebug from '../utils/render-debug';
 
 export default class QuestionViewClassify extends AbstractView {
   constructor(question, gameState) {
@@ -11,7 +12,7 @@ export default class QuestionViewClassify extends AbstractView {
 
   get template() {
     return `
-    <section class="game">
+    <div class="game">
     <p class="game__task">${this.question.description}</p>
     <form class="${this.question.inner}">
     ${[...this.question.answers].map((answer, index) => `
@@ -29,65 +30,42 @@ export default class QuestionViewClassify extends AbstractView {
       `).join(``)}
     </form>
     ${statsBarTemplate(this.gameState.answers)}
-    </section>
+    </div>
     `;
   }
 
   onAnswer() { }
-  onGameImageLoad(image) {
-
-    image.parentNode.style.display = `block`;
-
-    const frameSize = {
-      width: image.parentNode.clientWidth,
-      height: image.parentNode.clientHeight
-    };
-
-    const naturalSize = {
-      width: image.naturalWidth,
-      height: image.naturalHeight
-    };
-
-    const optimizedSize = resize(frameSize, naturalSize);
-
-    image.width = optimizedSize.width;
-    image.height = optimizedSize.height;
+  onDebug(debug) {
+    return debug ? renderDebug(this.element) : null;
   }
 
   bind() {
 
-    const images = this.element.querySelectorAll(`.game__option > img`);
-    images.forEach((image) => {
-      image.parentNode.style.display = `none`;
+    renderImages(this.element);
 
-      image.addEventListener(`load`, () => {
-        this.onGameImageLoad(image);
-      });
-    });
+    const answers = [];
 
-    const form = this.element.querySelector(`.game__content`);
     const options = this.element.querySelectorAll(`.game__option`);
+    options.forEach((option) => {
+      const optionValue = option.dataset.type;
+      const versions = option.querySelectorAll(`input`);
 
-    form.addEventListener(`change`, () => {
+      const correctVersion = [...versions].find((version) => version.value === optionValue);
+      const correctVersionBtn = correctVersion.parentNode.querySelector(`span`);
+      correctVersionBtn.classList.add(`correct-answer`);
 
-      let answers = [];
-
-      options.forEach((option) => {
-        let optionValue = option.dataset.type;
-        let versions = option.querySelectorAll(`input`);
-
+      option.addEventListener(`click`, () => {
         versions.forEach((version) => {
           if (version.checked) {
-            let answerValue = version.value;
+            const answerValue = version.value;
             answers.push(optionValue === answerValue);
           }
         });
+        if (options.length === answers.length) {
+          const result = !answers.includes(false);
+          this.onAnswer(result);
+        }
       });
-
-      if (options.length === answers.length) {
-        const result = !answers.includes(false);
-        this.onAnswer(result);
-      }
     });
   }
 }

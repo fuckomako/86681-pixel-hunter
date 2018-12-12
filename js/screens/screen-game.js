@@ -5,9 +5,11 @@ import QuestionViewChoose from '../views/view-question-choose';
 import FooterView from '../views/view-footer';
 
 export default class GameScreen {
-  constructor(model) {
+  constructor(model, debug = false) {
     this.model = model;
     this._interval = null;
+    this._debug = debug;
+
     this.header = this.createHeaderView();
     this.content = this.createQuestionView();
     this.footer = new FooterView();
@@ -33,6 +35,8 @@ export default class GameScreen {
       this.onAnswer(result);
       this.changeGameLevel();
     };
+
+    questionView.onDebug(this._debug);
 
     return questionView;
   }

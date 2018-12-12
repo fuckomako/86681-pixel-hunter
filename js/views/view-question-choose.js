@@ -1,6 +1,7 @@
 import AbstractView from './abstract-view';
 import statsBarTemplate from '../templates/template-stats-bar';
-import {resize} from '../utils/resize';
+import renderImages from '../utils/resize';
+import renderDebug from '../utils/render-debug';
 
 export default class QuestionViewChoose extends AbstractView {
   constructor(question, gameState) {
@@ -13,7 +14,7 @@ export default class QuestionViewChoose extends AbstractView {
 
   get template() {
     return `
-    <section class="game">
+    <div class="game">
     <p class="game__task">${this.question.description}</p>
     <form class="${this.question.inner}">
     ${[...this.question.answers].map((answer) => `
@@ -22,47 +23,25 @@ export default class QuestionViewChoose extends AbstractView {
       </div>`).join(``)}
     </form>
     ${statsBarTemplate(this.gameState.answers)}
-    </section>
+    </div>
     `;
   }
 
-  onAnswer() {
-  }
-
-  onGameImageLoad(image) {
-
-    image.parentNode.style.display = `block`;
-
-    const frameSize = {
-      width: image.parentNode.clientWidth,
-      height: image.parentNode.clientHeight
-    };
-
-    const naturalSize = {
-      width: image.naturalWidth,
-      height: image.naturalHeight
-    };
-
-    const optimizedSize = resize(frameSize, naturalSize);
-
-    image.width = optimizedSize.width;
-    image.height = optimizedSize.height;
+  onAnswer() { }
+  onDebug(debug) {
+    return debug ? renderDebug(this.element) : null;
   }
 
   bind() {
-    const images = this.element.querySelectorAll(`.game__option > img`);
-    images.forEach((image) => {
-      image.parentNode.style.display = `none`;
-      image.style.pointerEvents = `none`; // для firefox click
 
-      image.addEventListener(`load`, () => {
-        return this.onGameImageLoad(image);
-      });
-    });
-
+    renderImages(this.element);
 
     const options = this.element.querySelectorAll(`.game__option`);
     options.forEach((option) => {
+
+      const correctVersion = [...options].find((version) => version.dataset.type === this.answerCorrect);
+      correctVersion.classList.add(`correct-answer`);
+
       option.addEventListener(`click`, (evt) => {
         const target = evt.target;
         const result = target.dataset.type === this.answerCorrect;

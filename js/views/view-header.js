@@ -2,12 +2,7 @@ import AbstractView from './abstract-view';
 import {GameConcept} from '../utils/constants';
 
 const generateLivesTemplate = (lives, maxLives) => {
-  const emptyLives = new Array(maxLives - Math.max(0, lives))
-    .fill(`<img src="img/heart__empty.svg" class="game__heart" alt=" Missed Life" width="31" height="27">`);
-  const fullLives = new Array(Math.max(0, lives))
-    .fill(`<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`);
-
-  return emptyLives.concat(fullLives).join(``);
+  return `<img src="img/heart__empty.svg" class="game__heart" alt=" Missed Life" width="31" height="27">`.repeat(maxLives - Math.max(0, lives)) + `<img src="img/heart__full.svg" class="game__heart" alt="Life" width="31" height="27">`.repeat(Math.max(0, lives));
 };
 
 export default class HeaderView extends AbstractView {

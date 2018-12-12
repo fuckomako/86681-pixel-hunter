@@ -2,7 +2,7 @@ import {ScoringRules} from './constants';
 
 export default (answers, lives) => {
 
-  let gameResult = {
+  const gameResult = {
     correctAnswers: {
       count: answers.filter((answer) => {
         return answer === `correct` || answer === `fast` || answer === `slow`;
@@ -38,4 +38,3 @@ export default (answers, lives) => {
 
   return gameResult;
 };
-

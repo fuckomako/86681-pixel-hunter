@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import App from './application';
 
-App.showIntro();
+App.start();
