@@ -1,5 +1,7 @@
 import {GameConcept, TimeLimits} from '../utils/constants';
 
+const MIN_LIVES_NUMBER = 0;
+
 export default class GameModel {
   constructor(gameData, playerName) {
     this.gameData = gameData;
@@ -26,7 +28,7 @@ export default class GameModel {
   }
 
   isDead() {
-    return this._gameState.lives < 0;
+    return this._gameState.lives < MIN_LIVES_NUMBER;
   }
 
   nextLevel() {

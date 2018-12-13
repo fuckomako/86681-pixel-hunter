@@ -1,4 +1,5 @@
-const mainPage = document.querySelector(`#main`);
+export const mainPage = document.querySelector(`#main`);
+const TIME_INTERVAL = 1000;
 
 export const showScreen = (element) => {
   mainPage.innerHTML = ``;
@@ -12,5 +13,5 @@ export const showModal = (element) => {
 export const showScreenWithAnimation = (element) => {
   mainPage.firstChild.classList.add(`hide-animation`);
   element.classList.add(`show-animation`);
-  setTimeout(() => showScreen(element), 1000);
+  setTimeout(() => showScreen(element), TIME_INTERVAL);
 };

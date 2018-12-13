@@ -1,5 +1,5 @@
 import Loader from './utils/data-loader';
-import {showScreen, showModal, showScreenWithAnimation} from './utils/render-element.js';
+import {showScreen, showModal, showScreenWithAnimation, mainPage} from './utils/render-element.js';
 import GameModel from './models/game-model';
 import IntroScreen from './screens/screen-intro';
 import GreetingScreen from './screens/screen-greeting';
@@ -9,7 +9,7 @@ import StatsScreen from './screens/screen-stats';
 import ModalConfirmScreen from './screens/screen-modal-confirm';
 import ErrorScreen from './screens/screen-error';
 
-const debug = false; // дебаггер - правильные ответы в режиме отладки
+const debug = false;
 
 export default class Application {
   static async load() {
@@ -73,12 +73,14 @@ export default class Application {
   static showModalConfirm() {
     const modalConfirm = new ModalConfirmScreen();
     showModal(modalConfirm.root);
-    modalConfirm.showGreetScreen = () => this.showGreeting();
+    modalConfirm.showGreetScreen = () => {
+      this.showGreeting();
+      modalConfirm.root.remove();
+    };
     modalConfirm.init();
   }
 
-  static showError() {
-    const error = new ErrorScreen();
-    showScreen(error.root);
+  static showError(error) {
+    mainPage.appendChild(new ErrorScreen(error).content.element);
   }
 }

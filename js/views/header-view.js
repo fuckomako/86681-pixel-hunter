@@ -53,6 +53,14 @@ export default class HeaderView extends AbstractView {
     }
   }
 
+  blink(start) {
+    if (start) {
+      this._timeElement.classList.add(`game__timer--blink`);
+    } else {
+      this._timeElement.classList.remove(`game__timer--blink`);
+    }
+  }
+
   onLogoClick() { }
 
   bind() {
@@ -61,12 +69,5 @@ export default class HeaderView extends AbstractView {
 
     const logo = this.element.querySelector(`.back`);
     logo.addEventListener(`click`, () => this.onLogoClick());
-
-    if (this.gameState) {
-      const timer = this.element.querySelector(`.game__timer`);
-      if (this.gameState.time < 6) {
-        timer.classList.add(`game__timer--blink`);
-      }
-    }
   }
 }

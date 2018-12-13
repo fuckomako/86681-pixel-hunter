@@ -1,5 +1,5 @@
-import GreetingView from '../views/view-greeting';
-import FooterView from '../views/view-footer';
+import GreetingView from '../views/greeting-view';
+import FooterView from '../views/footer-view';
 
 export default class GreetingScreen {
   constructor() {

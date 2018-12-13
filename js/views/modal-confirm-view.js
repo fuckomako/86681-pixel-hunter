@@ -24,6 +24,7 @@ export default class ModalConfirmView extends AbstractView {
   }
 
   hide() {
+    document.removeEventListener(`keydown`, this.onEscKeyDown);
     this._element.remove();
   }
 

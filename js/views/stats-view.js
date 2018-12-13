@@ -72,7 +72,7 @@ export default class StatsView extends AbstractView {
       ${statsBarTemplate(gameResult.answers)}
       </td>
       <td class="result__total"></td>
-      <td class="result__total  result__total--final">Поражение</td>
+      <td class="result__total  result__total--final">Fail</td>
       </tr>
       </table>
       `;

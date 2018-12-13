@@ -1,10 +1,8 @@
-import ErrorView from '../views/view-error';
+import ModalErrorView from '../views/modal-error-view';
 
 export default class ErrorScreen {
-  constructor() {
-    this.content = new ErrorView();
-
-    this.root = document.createElement(`div`);
-    this.root.appendChild(this.content.element);
+  constructor(error) {
+    this.error = error;
+    this.content = new ModalErrorView(error);
   }
 }

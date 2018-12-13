@@ -1,5 +1,5 @@
-import IntroView from '../views/view-intro';
-import FooterView from '../views/view-footer';
+import IntroView from '../views/intro-view';
+import FooterView from '../views/footer-view';
 
 export default class IntroScreen {
   constructor() {

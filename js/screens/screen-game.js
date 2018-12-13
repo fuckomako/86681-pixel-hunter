@@ -1,8 +1,11 @@
 import {TimeLimits} from '../utils/constants';
-import HeaderView from '../views/view-header';
-import QuestionViewClassify from '../views/view-question-classify';
-import QuestionViewChoose from '../views/view-question-choose';
-import FooterView from '../views/view-footer';
+import HeaderView from '../views/header-view';
+import QuestionViewClassify from '../views/question-classify-view';
+import QuestionViewChoose from '../views/question-choose-view';
+import FooterView from '../views/footer-view';
+
+const TIMER_INTERVAL = 1000;
+const BLINK_TIME = 5;
 
 export default class GameScreen {
   constructor(model, debug = false) {
@@ -10,7 +13,7 @@ export default class GameScreen {
     this._interval = null;
     this._debug = debug;
 
-    this.header = this.createHeaderView();
+    this.header = this.createHeaderView(this.model.gameState.time);
     this.content = this.createQuestionView();
     this.footer = new FooterView();
 
@@ -50,20 +53,26 @@ export default class GameScreen {
   startTimer() {
     this._interval = setInterval(() => {
       this.model.tick();
-      if (this.model.gameState.time <= 0) {
+      if (this.model.gameState.time === BLINK_TIME) {
+        this.header.blink(true);
+      }
+      if (!this.model.gameState.time) {
         this.onAnswer(false);
         this.changeGameLevel();
+      } else {
+        this.updateTimer();
       }
-      this.updateTimer();
-    }, 1000);
+    }, TIMER_INTERVAL);
   }
 
   clearTimer() {
     clearInterval(this._interval);
+    this.header.blink(false);
   }
 
   changeGameLevel() {
     this.clearTimer();
+    this.header.blink(false);
     this.model.nextLevel();
 
     if (this.model.isDead() || this.model.gameComplete()) {
@@ -89,7 +98,6 @@ export default class GameScreen {
     } else {
       answer = `wrong`;
     }
-
     if (answer === `wrong`) {
       this.model.die();
     }
