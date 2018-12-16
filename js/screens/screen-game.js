@@ -117,10 +117,8 @@ export default class GameScreen {
 
   updateScreen() {
     this.model.renewTimer();
-
     this.updateTimer();
     this.updateQuestion();
-
     this.startTimer();
   }
 

@@ -36,7 +36,7 @@ export default (element) => {
   const images = element.querySelectorAll(`.game__option > img`);
   images.forEach((image) => {
     image.parentNode.style.display = `none`;
-    image.style.pointerEvents = `none`; // для firefox click div
+    image.style.pointerEvents = `none`;
 
     image.addEventListener(`load`, () => {
       onLoadImage(image);
