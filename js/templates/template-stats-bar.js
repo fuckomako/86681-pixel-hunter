@@ -1,16 +1,20 @@
 import {GameConcept} from '../utils/constants';
 
 const renewAnswerIndicator = (answer) => {
-  let answerType;
   switch (answer) {
-    case `fast`: answerType = `stats__result--fast`; break;
-    case `slow`: answerType = `stats__result--slow`; break;
-    case `correct`: answerType = `stats__result--correct`; break;
-    case `wrong`: answerType = `stats__result--wrong`; break;
-    case undefined: answerType = `stats__result--unknown`; break;
-    default: return null;
+    case `fast`:
+      return `stats__result--fast`;
+    case `slow`:
+      return `stats__result--slow`;
+    case `correct`:
+      return `stats__result--correct`;
+    case `wrong`:
+      return `stats__result--wrong`;
+    case undefined:
+      return `stats__result--unknown`;
+    default:
+      return null;
   }
-  return answerType;
 };
 
 const statsBarTemplate = (answers) =>
@@ -23,4 +27,3 @@ const statsBarTemplate = (answers) =>
   `;
 
 export default statsBarTemplate;
-

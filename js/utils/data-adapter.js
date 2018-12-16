@@ -2,7 +2,7 @@ export default (data) => {
   const adapted = [];
 
   data.forEach((it) => {
-    let question = {
+    const question = {
 
       type: it.type,
 
