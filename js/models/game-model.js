@@ -3,10 +3,19 @@ import {GameConcept, TimeLimits} from '../utils/constants';
 const MIN_LIVES_NUMBER = 0;
 
 export default class GameModel {
-  constructor(gameData, playerName) {
+  constructor(gameData, gamePreloadedImages, playerName) {
     this.gameData = gameData;
+    this.gamePreloadedImages = gamePreloadedImages;
     this.playerName = playerName;
     this.restartGame();
+  }
+
+  get gameState() {
+    return this._gameState;
+  }
+
+  get gameOrder() {
+    return this._gameOrder;
   }
 
   restartGame() {
@@ -31,11 +40,11 @@ export default class GameModel {
     return this._gameState.lives < MIN_LIVES_NUMBER;
   }
 
-  nextLevel() {
+  goToNextLevel() {
     return this._gameState.level++;
   }
 
-  gameComplete() {
+  isGameComplete() {
     return this._gameState.level === GameConcept.NUMBER_OF_GAMES;
   }
 
@@ -45,10 +54,6 @@ export default class GameModel {
 
   renewTimer() {
     this._gameState.time = TimeLimits.INITIAL_TIMER;
-  }
-
-  get gameState() {
-    return this._gameState;
   }
 }
 

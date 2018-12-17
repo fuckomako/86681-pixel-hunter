@@ -1,48 +1,37 @@
 export default (data) => {
   const adapted = [];
 
+  const dataMapper = {
+    category: {
+      'tinder-like': `classify`,
+      'two-of-two': `classify`,
+      'one-of-three': `choose`
+    },
+    inner: {
+      'tinder-like': `game__content  game__content--wide`,
+      'two-of-two': `game__content`,
+      'one-of-three': `game__content game__content--triple`
+    },
+    answerClass: {
+      'painting': `paint`,
+      'photo': `photo`
+    }
+  };
+
   data.forEach((it) => {
-    let question = {
-
+    const question = {
       type: it.type,
-
       description: it.question,
-
-      get category() {
-        if (this.type === `tinder-like` || this.type === `two-of-two`) {
-          return `classify`;
-        }
-        if (this.type === `one-of-three`) {
-          return `choose`;
-        } else {
-          return null;
-        }
-      },
-
-      get inner() {
-        if (this.type === `tinder-like`) {
-          return `game__content  game__content--wide`;
-        }
-        if (this.type === `two-of-two`) {
-          return `game__content`;
-        }
-        if (this.type === `one-of-three`) {
-          return `game__content game__content--triple`;
-        } else {
-          return null;
-        }
-      },
-
-      get answers() {
-        return [...it.answers].map((answer) => {
-          return {
-            get class() {
-              return answer.type === `painting` ? `paint` : answer.type;
-            },
-            src: answer.image.url
-          };
-        });
-      }
+      category: dataMapper.category[it.type],
+      inner: dataMapper.inner[it.type],
+      answers: [...it.answers].map((answer) => {
+        return {
+          class: dataMapper.answerClass[answer.type],
+          src: answer.image.url,
+          width: answer.image.width,
+          height: answer.image.height
+        };
+      })
     };
 
     adapted.push(question);

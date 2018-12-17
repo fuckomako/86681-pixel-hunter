@@ -2,38 +2,40 @@ import {ScoringRules} from './constants';
 
 export default (answers, lives) => {
 
+  const correctAnswersCount = answers.filter((answer) =>
+    answer === `correct` || answer === `fast` || answer === `slow`).length;
+  const correctAnswersPoints = correctAnswersCount * ScoringRules.CORRECT_ANSWER;
+
+  const fastResponseCount = answers.filter((answer) => answer === `fast`).length;
+  const fastResponsePoints = fastResponseCount * ScoringRules.FAST_RESPONSE;
+
+  const slowResponseCount = answers.filter((answer) => answer === `slow`).length;
+  const slowResponsePoints = slowResponseCount * ScoringRules.SLOW_RESPONSE;
+
+  const livesPoints = lives * ScoringRules.REMAINING_LIFE;
+
+  const totalScore =
+    correctAnswersPoints + fastResponsePoints +
+    slowResponsePoints + livesPoints;
+
   const gameResult = {
     correctAnswers: {
-      count: answers.filter((answer) => {
-        return answer === `correct` || answer === `fast` || answer === `slow`;
-      }).length,
-      get points() {
-        return this.count * ScoringRules.CORRECT_ANSWER;
-      }
+      count: correctAnswersCount,
+      points: correctAnswersPoints
     },
     fastResponse: {
-      count: answers.filter((answer) => answer === `fast`).length,
-      get points() {
-        return this.count * ScoringRules.FAST_RESPONSE;
-      }
+      count: fastResponseCount,
+      points: fastResponsePoints
     },
     slowResponse: {
-      count: answers.filter((answer) => answer === `slow`).length,
-      get points() {
-        return this.count * ScoringRules.SLOW_RESPONSE;
-      }
+      count: slowResponseCount,
+      points: slowResponsePoints
     },
     lives: {
       count: lives,
-      get points() {
-        return this.count * ScoringRules.REMAINING_LIFE;
-      }
+      points: livesPoints
     },
-    getTotalScore: () =>
-      gameResult.correctAnswers.points +
-      gameResult.fastResponse.points +
-      gameResult.slowResponse.points +
-      gameResult.lives.points
+    totalScore
   };
 
   return gameResult;

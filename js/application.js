@@ -9,7 +9,18 @@ import StatsScreen from './screens/screen-stats';
 import ModalConfirmScreen from './screens/screen-modal-confirm';
 import ErrorScreen from './screens/screen-error';
 
-const debug = false;
+// дебаггер - включить через url => example.com/something?debug=true
+let debug;
+try {
+  debug =
+    window.location.search
+      .replace(`?`, ``)
+      .split(`&`)
+      .map((piece) => piece.split(`=`))
+      .find((pair) => pair[0] === `debug`)[1];
+} catch (error) {
+  debug = false;
+}
 
 export default class Application {
   static async load() {
@@ -17,6 +28,8 @@ export default class Application {
       const intro = new IntroScreen();
       showScreen(intro.root);
       this.gameData = await Loader.loadData();
+      this.gamePreloadedImages = await Loader.preloadImages(this.gameData);
+
       Application.showGreeting(true);
     } catch (error) {
       Application.showError(error);
@@ -39,7 +52,7 @@ export default class Application {
   }
 
   static showRules() {
-    const rules = new RulesScreen();
+    const rules = new RulesScreen(this.gameImages);
     showScreen(rules.root);
     rules.showGreetScreen = () => this.showGreeting();
     rules.showNextScreen = (playerName) => this.showGame(playerName);
@@ -47,7 +60,7 @@ export default class Application {
   }
 
   static showGame(playerName) {
-    const model = new GameModel(this.gameData, playerName);
+    const model = new GameModel(this.gameData, this.gamePreloadedImages, playerName);
     const game = new GameScreen(model, debug);
     showScreen(game.root);
     game.showNextScreen = () => this.showStats(model);
@@ -58,9 +71,7 @@ export default class Application {
   static async showStats(model) {
     try {
       await Loader.saveResults(model.gameState, model.playerName);
-
       this.gameResults = await Loader.loadResults(model.playerName);
-
       const stats = new StatsScreen(this.gameResults);
       showScreen(stats.root);
       stats.showGreetScreen = () => this.showGreeting();
@@ -82,5 +93,8 @@ export default class Application {
 
   static showError(error) {
     mainPage.appendChild(new ErrorScreen(error).content.element);
+
   }
 }
+
+

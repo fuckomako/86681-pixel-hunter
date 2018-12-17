@@ -21,24 +21,11 @@ export const addAnswer = (array, ans, sec) => {
   return array;
 };
 
-export const createAnswersArray = () => {
-  let array = [];
-  for (let i = 0; i < NUM; i++) {
-    const ans = Math.random() >= 0.5;
-    const sec = getRandomInt(0, TIME_LIMIT);
-    addAnswer(array, ans, sec);
-  }
-  return array;
-};
-
-
 export const countScore = (answers, livesNumber) => {
   if (answers.length < NUM) {
     return -1;
   }
-  let score = 0;
-  for (let i = 0; i < answers.length; i++) {
-    const current = answers[i];
+  return answers.reduce((score, current) => {
     if (current.value) {
       score += 100;
       if (current.time < NUM) {
@@ -47,9 +34,9 @@ export const countScore = (answers, livesNumber) => {
         score -= 50;
       }
     }
-  }
-  score += livesNumber * 50;
-  return score;
+
+    return score;
+  }, livesNumber * 50);
 };
 
 export const changeLevel = (game, level) => {

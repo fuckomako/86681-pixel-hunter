@@ -13,7 +13,7 @@ export default class GameScreen {
     this._interval = null;
     this._debug = debug;
 
-    this.header = this.createHeaderView(this.model.gameState.time);
+    this.header = this.createHeaderView();
     this.content = this.createQuestionView();
     this.footer = new FooterView();
 
@@ -28,11 +28,12 @@ export default class GameScreen {
     const questionType = question.category;
 
     const questionTypeMap = {
-      'classify': new QuestionViewClassify(question, this.model.gameState),
-      'choose': new QuestionViewChoose(question, this.model.gameState)
+      'classify': QuestionViewClassify,
+      'choose': QuestionViewChoose
     };
 
-    const questionView = questionTypeMap[questionType];
+    const QuestionViewClass = questionTypeMap[questionType];
+    const questionView = new QuestionViewClass(question, this.model.gamePreloadedImages, this.model.gameState);
 
     questionView.onAnswer = (result) => {
       this.onAnswer(result);
@@ -73,9 +74,9 @@ export default class GameScreen {
   changeGameLevel() {
     this.clearTimer();
     this.header.blink(false);
-    this.model.nextLevel();
+    this.model.goToNextLevel();
 
-    if (this.model.isDead() || this.model.gameComplete()) {
+    if (this.model.isDead() || this.model.isGameComplete()) {
       this.showNextScreen();
     } else {
       this.updateScreen();
@@ -98,6 +99,7 @@ export default class GameScreen {
     } else {
       answer = `wrong`;
     }
+
     if (answer === `wrong`) {
       this.model.die();
     }
@@ -117,10 +119,7 @@ export default class GameScreen {
 
   updateScreen() {
     this.model.renewTimer();
-
-    this.updateTimer();
     this.updateQuestion();
-
     this.startTimer();
   }
 
