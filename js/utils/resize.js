@@ -11,4 +11,3 @@ export default (frame, given) => {
 
   return optimized;
 };
-
