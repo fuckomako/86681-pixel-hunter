@@ -12,12 +12,7 @@ import ErrorScreen from './screens/screen-error';
 // дебаггер - включить через url => example.com/something?debug=true
 let debug;
 try {
-  debug =
-    window.location.search
-      .replace(`?`, ``)
-      .split(`&`)
-      .map((piece) => piece.split(`=`))
-      .find((pair) => pair[0] === `debug`)[1];
+  debug = [...new URLSearchParams(window.location.search).entries()].find((pair) => pair[0] === `debug`)[1];
 } catch (error) {
   debug = false;
 }
