@@ -9,10 +9,14 @@ const APP_ID = 666666;
 
 export default class Loader {
   static async loadData() {
-    const response = await fetch(`${SERVER_URL}/questions`);
-    checkStatus(response);
-    const data = await response.json();
-    return adaptServerData(data);
+    try {
+      const response = await fetch(`${SERVER_URL}/questions`);
+      checkStatus(response);
+      const data = await response.json();
+      return adaptServerData(data);
+    } catch (error) {
+      throw new Error(`Ошибка загрузки вопросов`);
+    }
   }
 
   static preloadImages(data) {
@@ -41,7 +45,6 @@ export default class Loader {
 
               return image;
             })
-            .catch((error) => `Ошибка ${error.message}`)
         );
       });
     });
