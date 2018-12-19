@@ -34,12 +34,11 @@ export default class HeaderView extends AbstractView {
            ${generateLivesTemplate(this.gameState.lives, GameConcept.NUMBER_OF_LIVES)}
         </div>
       </header>`;
-    } else {
-      return `
-      <header class="header">
-        ${this._logo()}
-      </header>`;
     }
+    return `
+     <header class="header">
+       ${this._logo()}
+     g</header>`;
   }
 
   update(time, lives) {
